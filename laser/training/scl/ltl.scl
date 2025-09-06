@@ -1,0 +1,148 @@
+// Basic types
+type Var = isize
+type Obj = isize
+type Time = i32
+
+//////////////////////////
+// Variable assignments //
+//////////////////////////
+@hidden
+type variable(Var) // STSL program
+@hidden
+type object(Obj) // Scene graph
+rel var_obj = disjunct[v](o: variable(v) and object(o))
+@hidden
+type name(o: Obj, name: Var)
+
+//////////////////////////////////
+// Spatial-temporal scene graph //
+//////////////////////////////////
+
+@hidden
+type time(time: Time)
+@hidden
+type max_time(time: Time)
+@hidden
+type sg_unary_atom(predicate: String, fid: Time, o1: Obj)
+@hidden
+type sg_binary_atom(predicate: String, fid: Time, o1: Obj, o2: Obj)
+
+type aligned_time_stamp(time: usize, t1: Time, t2: Time, t3:Time)
+
+///////////////////////////////////
+//      Specification on STSL   //
+///////////////////////////////////
+
+// Term: either constant string or variable
+type Term = Const(Obj) 
+          | Var(Var)
+
+// TForm: temporal formula, containing `Global`, `Finally`, `Until`, and `Next`
+type TForm = Global(TForm) 
+            | Finally(TForm) 
+            | Until(TForm, TForm) 
+            | Next(TForm) 
+            | Logic(LForm)
+
+// LForm: logical formula, containing logical conjunction and atomic queries
+type LForm = And(LForm, LForm) 
+            | Unary(String, Term) 
+            | Binary(String, Term, Term) 
+            | NegUnary(String, Term) 
+            | NegBinary(String, Term, Term) 
+            | Neq(Term, Term)
+
+// The specification
+type spec(psi: TForm)
+
+// Aligning logical formula: the formula `phi` is aligned with the scene graph starting from time `s`, given the variable assignment `va`
+type align_lform(phi: LForm, s: Time)
+rel align_lform(phi, s) = case phi is And(l, r) and align_lform(l, s) and align_lform(r, s)
+
+rel align_lform(phi, s) = case phi is Unary(pred, Var(var)) and var_obj(var, o) 
+                          and sg_unary_atom(pred, s, o) and time(s)
+                        
+rel align_lform(phi, s) = case phi is Unary(pred, Const(c)) and var_obj(var, o) 
+                          and has_constant(pred, s, c) and time(s)
+
+rel align_lform(phi, s) = case phi is NegUnary(pred, Var(var)) and var_obj(var, o) 
+                          and not sg_unary_atom(pred, s, o) and time(s)
+
+rel align_lform(phi, s) = case phi is NegUnary(pred, Const(c)) and var_obj(var, o) 
+                          and not has_constant(pred, s, c) and time(s)
+
+rel align_lform(phi, s) = case phi is Binary(pred, Var(v1), Var(v2)) and var_obj(v1, o1) 
+                          and var_obj(v2, o2) and sg_binary_atom(pred, s, o1, o2) and time(s)
+
+rel align_lform(phi, s) = case phi is Binary(pred, Var(v1), Const(c2)) and var_obj(v1, o1) 
+                          and name(o2, c2) and sg_binary_atom(pred, s, o1, o2) and time(s)
+
+rel align_lform(phi, s) = case phi is Binary(pred, Const(c1), Var(v2)) and name(o1, c1) 
+                          and var_obj(v2, o2) and sg_binary_atom(pred, s, o1, o2) and time(s)
+                          
+rel align_lform(phi, s) = case phi is Binary(pred, Const(c1), Const(c2)) and name(o1, c1) 
+                          and name(o2, c2) and sg_binary_atom(pred, s, o1, o2) and time(s)
+
+rel align_lform(phi, s) = case phi is NegBinary(pred, Var(v1), Var(v2)) and var_obj(v1, o1) 
+                          and var_obj(v2, o2) and not sg_binary_atom(pred, s, o1, o2) and time(s)
+
+rel align_lform(phi, s) = case phi is NegBinary(pred, Var(v1), Const(c2)) and var_obj(v1, o1) 
+                          and name(o2, c2) and not sg_binary_atom(pred, s, o1, o2) and time(s)
+
+rel align_lform(phi, s) = case phi is NegBinary(pred, Const(c1), Var(v2)) and name(o1, c1) 
+                          and var_obj(v2, o2) and not sg_binary_atom(pred, s, o1, o2) and time(s)
+
+rel align_lform(phi, s) = case phi is NegBinary(pred, Const(c1), Const(c2)) and name(o1, c1) 
+                          and name(o2, c2) and not sg_binary_atom(pred, s, o1, o2) and time(s)
+
+rel align_lform(phi, s) = case phi is Neq(Var(v1), Var(v2)) and var_obj(v1, o1) 
+                          and var_obj(v2, o2) and o1 != o2 and time(s)
+
+rel align_lform(phi, s) = case phi is Neq(Const(c1), Var(v2)) and name(o1, c1) 
+                          and var_obj(v2, o2) and o1 != o2 and time(s)
+
+rel align_lform(phi, s) = case phi is Neq(Var(v1), Const(c2)) and var_obj(v1, o1)
+                          and name(v2, o2) and o1 != o2 and time(s)
+
+// Aligning temporal formula: the formula `psi` is aligned with the scene graph starting from time `s`,
+// given the variable assignment `va`
+type align_tform(psi: TForm, s: Time)
+rel align_tform(psi, s) = case psi is Global(p1) and max_time(n) and align_all_tform(p1, s, n)
+rel align_tform(psi, s) = case psi is Finally(p1) and align_once_tform(p1, s)
+rel align_tform(psi, s) = case psi is Until(p1, p2) and time(t + 1) and s < (t + 1) 
+                          and align_all_tform(p1, s, t) and align_tform(p2, t + 1)
+rel align_tform(psi, s) = case psi is Until(p1, p2) and align_tform(p2, s)
+rel align_tform(psi, s) = case psi is Next(p1) and align_tform(p1, s + 1) and time(s)
+rel align_tform(psi, s) = case psi is Logic(p1) and align_lform(p1, s)
+
+// Helper relations
+rel has_constant(pred, fid, constant) = sg_unary_atom(pred, fid, o) and name(o, constant)
+type align_once_tform(psi: TForm, s: Time)
+rel align_once_tform(psi, s) = align_tform(psi, s)
+rel align_once_tform(psi, s) = align_once_tform(psi, s + 1) and time(s)
+type align_all_tform(psi: TForm, s: Time, t: Time)
+rel align_all_tform(psi, s, s) = align_tform(psi, s)
+rel align_all_tform(psi, s, n + 1) = align_all_tform(psi, s, n) and align_tform(psi, n + 1) and time(n + 1)
+
+///////////////////////////
+// Solving for alignment //
+///////////////////////////
+rel aligned() = spec(psi) and align_tform(psi, 0)
+
+rel aligned_time_stamp(1, t_pre, -1, -1) = spec(psi) and align_tform(psi, 0) and 
+                                case psi is Finally(pre) and align_tform(pre, t_pre)
+
+rel aligned_time_stamp(2, t1, t2, -1) = spec(psi) and align_tform(psi, 0) and 
+                                case psi is Until(e1, e2) and
+                                case e1 is Finally(Logic(l1)) and
+                                case e2 is Finally(Logic(l2)) and
+                                align_tform(p1, t1) and align_tform(p2, t2) and t2 > t1
+
+rel aligned_time_stamp(3, t1, t2, t3) = spec(psi) and align_tform(psi, 0) and 
+                                case psi is Until(Finally(e1), Until(Finally(e2), Finally(e3))) and
+                                align_tform(e1, t1) and align_tform(e2, t2) and align_tform(e3, t3) and 
+                                t1 < t2 and t2 < t3
+
+rel aligned_t1(t1) = aligned_time_stamp(_, t1, t2, t3)
+rel aligned_t2(t2) = aligned_time_stamp(_, t1, t2, t3)
+rel aligned_t3(t3) = aligned_time_stamp(_, t1, t2, t3)
