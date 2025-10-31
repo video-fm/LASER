@@ -102,7 +102,8 @@ class PredicateModel(nn.Module):
                 topk_cate=3,
                 dummy_str="$$$",
                 multi_class=False,
-                output_logit=False
+                output_logit=False,
+                output_embeddings=False
                 ):
 
         # Fill in the empty space in cate / unary / binary kws with dummy
@@ -419,6 +420,10 @@ class PredicateModel(nn.Module):
             batched_cropped_obj_pairs[0] = [dummy_img]
 
         batched_image_binary_probs = []
+        batched_obj_pair_features = {}
+        for vid in range(batch_size):
+            batched_obj_pair_features[vid] = torch.tensor([])
+            
         if len(batched_cropped_obj_pairs) == 0:
             batched_image_binary_probs.append({})
         else:
@@ -442,6 +447,7 @@ class PredicateModel(nn.Module):
                 obj_features = self._image_features_checkpoint(
                     self.clip_binary_model, inputs["pixel_values"]
                 )
+                batched_obj_pair_features[vid] = obj_features
                 obj_clip_features = obj_features / obj_features.norm(p=2, dim=-1, keepdim=True)
                 binary_nl_features = binary_nl_features / binary_nl_features.norm(p=2, dim=-1, keepdim=True)
 
@@ -467,4 +473,15 @@ class PredicateModel(nn.Module):
                                 binary_prob_per_obj[(fid, obj_pair, binary_name)] = prob
                 batched_image_binary_probs.append(binary_prob_per_obj)
 
-        return batched_image_cate_probs, batched_image_unary_probs, batched_image_binary_probs, dummy_prob
+        if output_embeddings:
+            embeddings_dict = {
+                'cate_obj_clip_features': batched_obj_cate_features,
+                'cate_object_ids': batched_object_ids_lookup,
+                'unary_obj_clip_features': batched_obj_unary_features,
+                'unary_object_ids': batched_object_ids_lookup,
+                'binary_obj_pair_features': batched_obj_pair_features,
+                'binary_object_pairs': new_select_pairs,
+            }
+            return batched_image_cate_probs, batched_image_unary_probs, batched_image_binary_probs, dummy_prob, embeddings_dict
+        else:
+            return batched_image_cate_probs, batched_image_unary_probs, batched_image_binary_probs, dummy_prob

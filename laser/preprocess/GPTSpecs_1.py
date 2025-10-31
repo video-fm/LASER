@@ -49,6 +49,7 @@ def query_one_batch(action_prompt_ls, lock, shared_cache, store_cache_path):
     
     try:
         action_responses = json.loads(full_reply_content)
+        
     except json.decoder.JSONDecodeError:
         print("JSON decode error, throwing this batch away")
         return
@@ -59,6 +60,9 @@ def query_one_batch(action_prompt_ls, lock, shared_cache, store_cache_path):
             cache[best_vid] = action_dict
 
     elif type(action_responses) == dict:
+        if "actions" in action_responses and len(action_responses) == 1:
+            action_responses = action_responses["actions"]
+            
         if len(action_responses) == batch_size:
             for action_id, res in action_responses.items():
                 if 'video_id' in res:
@@ -135,13 +139,22 @@ class GPTSpecPart1:
 
     def action2spec(self):
         if os.path.exists(self.store_cache_path):
-            if self.store_cache_path.split('.')[-1] == 'json':
+            ext = self.store_cache_path.split('.')[-1]
+            if ext == 'json':
                 cache = json.load(open(self.store_cache_path, 'r'))
-            elif self.store_cache_path.split('.')[-1] == 'jsonl':
+            elif ext == 'jsonl':
                 cache = {}
                 with open(self.store_cache_path, 'r') as f:
                     for line in f:
-                        cache.update(json.loads(line))
+                        line = line.strip()
+                        if line:
+                            try:
+                                cache.update(json.loads(line))
+                            except Exception as e:
+                                print(f"Error parsing line in jsonl cache: {e}\nLine: {line[:100]}")
+            else:
+                print(f"Warning: Unknown cache file extension: {ext}. Defaulting to empty cache.")
+                cache = {}
         else:
             cache = {}
 
@@ -167,6 +180,7 @@ class GPTSpecPart1:
 
         worker_ct = int(multiprocessing.cpu_count() - 20) 
         # worker_ct = 1
+        
         # Chunk does not improve batch process ability
         with multiprocessing.Pool(worker_ct) as pool:
             # worker_ct = multiprocessing.cpu_count() / 2

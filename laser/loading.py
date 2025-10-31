@@ -41,6 +41,46 @@ def load_video(video_path, target_fps = None):
 
     return new_video
 
+def load_video_frames(frames_root):
+    frames = []
+    if not os.path.exists(frames_root):
+        print("frames root does not exist")
+        return frames
+
+    # Gather image files (support common extensions)
+    valid_exts = {'.png', '.jpg', '.jpeg', '.bmp'}
+    try:
+        file_names = [
+            f for f in os.listdir(frames_root)
+            if os.path.isfile(os.path.join(frames_root, f)) and os.path.splitext(f.lower())[1] in valid_exts
+        ]
+    except Exception:
+        return frames
+
+    # Natural sort (assumes filenames contain frame indices)
+    def _sort_key(name):
+        base, _ = os.path.splitext(name)
+        # extract trailing number if present
+        num = ''
+        for ch in reversed(base):
+            if ch.isdigit():
+                num = ch + num
+            else:
+                break
+        return (base if num == '' else base[:-len(num)], int(num) if num != '' else -1, name)
+
+    file_names.sort(key=_sort_key)
+
+    for fname in file_names:
+        fpath = os.path.join(frames_root, fname)
+        img_bgr = cv2.imread(fpath, cv2.IMREAD_COLOR)
+        if img_bgr is None:
+            continue
+        img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
+        frames.append(img_rgb)
+
+    return frames
+    
 def bitmasks2bboxes(bitmasks):
     if len(bitmasks) == 0:
         return []

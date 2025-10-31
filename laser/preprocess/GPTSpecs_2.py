@@ -1220,7 +1220,7 @@ class GPTSpecPart2:
 
         for action, spec in self.gpt_specs.items():
             # print(action)
-            # if not action == 'GZwJPQFW-20':
+            # if not action == '50':
             #     continue
             
             # if action == 'GZwJPQFW-20':
@@ -1271,9 +1271,9 @@ class GPTSpecPart2:
             new_prog['duration precise'] = [ts_info['duration precise'] for ts_info in prog.gpt_result['time stamps'].values()]
             new_prog['video location precise'] = [ts_info['video location precise'] for ts_info in prog.gpt_result['time stamps'].values()]
             description_length[action] = [ len(tp.args) for tp in prog.time_progs]
-            # json_line = json.dumps(new_prog.copy())
-            # with open(self.store_cache_path, 'a') as f:
-            #     f.write(json_line + '\n')
+            json_line = json.dumps(new_prog.copy())
+            with open(self.store_cache_path, 'a') as f:
+                f.write(json_line + '\n')
             
         # json.dump(all_action_scl, open(self.store_cache_path, 'w'))
         return wrong_pred_ct, wrong_arg_ct
