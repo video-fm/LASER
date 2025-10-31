@@ -13,13 +13,6 @@ import json
 from laser.utils import *
 from laser.loading import *
 
-corrupted_vids = ['1052-2937016891', '208-JlXYqpEWUuA-split_0', 'T8eE4q9xGs8', '-SYkmyrfaU8']
-error_vids = ['O4U9pyO5eKs', 'IsuDOLuMBR0', 'd_QhikegS2Y', 'UqQ64AJGDcY', '403-XrhAUrmnjaA-split_9', '403-9rS18VIXt1w-split_0', '230-yDZvPCG51zw-split_0', 'Z-MgEjtwyY4', '221-i4ZAwUoP8c4-split_0', '421-z_ZHVTqbSZo-split_3', '306-2tCWtcoGpCM-split_5', '106-QUV_oA9DrGw-split_4', 'U6YoJR-ujmQ', '124-dsI9QVhmsGg-split_2', '127-TFRrKVTcWnI-split_0', 'wXI4c0g6a8k', '107-FkhBO3uxxnU-split_4', 'yX97I8iJS1U', '_XJPiGYYnOA', '318-qH6kSDQMiFA-split_13', 'r-Z0OogbE-s', '227-aloPXuBLkDs-split_4']
-corrupted_vids_path_2 = "/home/jianih/research/LASER/data/LLaVA-Video-178K-v2/corrupted_LLaVA_videos_refined.json"
-corrupted_vids_2 = json.load(open(corrupted_vids_path_2, 'r'))
-corrupted_vids = corrupted_vids + corrupted_vids_2 + error_vids
-bug_vid = ['pxe4GPi8aE0', '316-d2Y0zSQtvj4-split_1','83cwNnlo3IU', 'e_CiGCmoHuw', 'v_IuntoXkEWPI', '1010-4968805923', '403-XrhAUrmnjaA-split_9',  '403-9rS18VIXt1w-split_0', '230-yDZvPCG51zw-split_0', 'Z-MgEjtwyY4', ]
-
 def get_absolute_paths(directory):
     """Gets absolute paths for all files in a directory recursively."""
 
@@ -102,10 +95,6 @@ class LLaVABaseDataset():
                     continue
             
             if video_id in to_skip:
-                continue
-
-            if video_id in corrupted_vids:
-                missing_dp['corrupted'].append(datapoint)
                 continue
             
             if not video_id in nl_data:
