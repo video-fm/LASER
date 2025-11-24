@@ -104,59 +104,45 @@ If you use LASER in your research, please cite:
 }
 ```
 
-## 🛠️ Environment Setup
+## 🛠️ Installation
 
-### 🏋️ Training Environment
+### Environment Setup
 
-1. **Create conda environment**
-   ```bash
-   conda env create -f environments/laser_train_env.yml
-   ```
+**🏋️ Training Environment**
+```bash
+# 1. Create environment
+conda env create -f environments/laser_train_env.yml
 
-2. **Install patched GroundingDINO**
-   ```bash
-   # Follow instructions at https://github.com/video-fm/GroundingDINO
-   ```
+# 2. Install dependencies (follow their respective instructions)
+# - GroundingDINO: https://github.com/video-fm/GroundingDINO
+# - Segment Anything 2: https://github.com/video-fm/video-sam2
+# - Scallop: https://github.com/scallop-lang/scallop
 
-3. **Install patched Segment Anything 2**
-   ```bash
-   # Follow instructions at https://github.com/video-fm/video-sam2
-   ```
+# 3. Verify
+python src/training/train_clip_distributed_restore.py
+```
 
-4. **Install Scallop language**
-   ```bash
-   # Follow instructions at https://github.com/scallop-lang/scallop
-   ```
+**📊 Evaluation Environment**
+```bash
+# Create environment and install same dependencies as training
+conda env create -f environments/laser_eval_env.yml
 
-5. **Verify setup**
-   ```bash
-   python src/training/train_clip_distributed_restore.py
-   ```
+# Verify by running the demo notebook: demo/inference.ipynb
+```
 
-### 📊 Evaluation Environment
+### Datasets
 
-1. **Create conda environment**
-   ```bash
-   conda env create -f environments/laser_eval_env.yml
-   ```
-
-2. **Install patched GroundingDINO** (same as training)
-
-3. **Install patched Segment Anything 2** (same as training)
-
-4. **Verify setup**
-   - Run the [demo jupyter notebook](demo/inference.ipynb)
-
-## Datasets
-
-### Training Dataset Downloading
+##### Training Dataset Downloading
+- Download the generated mask data and GPT generated label data from https://huggingface.co/datasets/video-fm/ESCA-video-87K
+- Download the full videos from https://huggingface.co/datasets/lmms-lab/LLaVA-Video-178K
 
 ### Preprocessing
+We have already preprocessed the required masks and labels for you, but if you want to generate your own dataset, please follow the instructions [HERE](laser/preprocess/README.md)
 
-#### Video Mask Processing
+##### Video Mask Processing
 ```src/Preprocess/mask_generation.py```
 
-#### STSL Generation
+##### STSL Generation
 - Using GPT to generate JSON structures of the video captions. ```src/Preprocess/GPTSpecs_1.py```
 - Parsing the generated structures to create STSL programs. ```src/Preprocess/GPTSpecs_2.py```
 - Negative sample generation for contrastive learning. ```src/Preprocess/NegativeSampler.py```
