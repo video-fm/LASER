@@ -1,3 +1,32 @@
+<div align="center">
+
+# LASER: A Neuro-Symbolic Framework for Learning Spatial-Temporal Scene Graphs with Weak Supervision
+
+</div>
+
+<div align="center">
+
+[![Paper](https://img.shields.io/badge/arXiv-2304.07647-b31b1b.svg)](https://arxiv.org/abs/2304.07647)
+[![Dataset](https://img.shields.io/badge/🤗%20HuggingFace-ESCA--video--87K-yellow)](https://huggingface.co/datasets/video-fm/ESCA-video-87K)
+[![Code](https://img.shields.io/badge/GitHub-LASER-blue?logo=github)](https://github.com/video-fm/LASER)
+
+[Jiani Huang](https://www.cis.upenn.edu/~jianih/) · [Ziyang Li](https://liby99.github.io) · [Mayur Naik](https://www.cis.upenn.edu/~mhnaik/) · [Ser-Nam Lim](https://sites.google.com/site/sernam)
+
+**University of Pennsylvania** · **University of Central Florida**
+
+</div>
+
+## 🎬 What does LASER do for you? 
+
+<div align="center">
+
+| Input Video | Output Video (with Scene Graph) |
+|:-----------:|:-------------------------------:|
+| <video src="https://github.com/user-attachments/assets/demo-input.mp4" width="400"/> | <video src="https://github.com/user-attachments/assets/demo-output.mp4" width="400"/> |
+
+*Click on the videos above to play them*
+
+</div>
 
 ## Environmental setup
 
