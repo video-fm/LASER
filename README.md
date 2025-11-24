@@ -18,12 +18,21 @@
 
 ## 🎬 What does LASER do for you? 
 
+<p align="center">
+  <em>LASER automatically detects objects, actions and their relationships in videos</em>
+</p>
+
+<br>
+
 <div align="center">
-
-| Input Video | Output Video (with Scene Graph) |
-|:-----------:|:-------------------------------:|
-| <video src="https://github.com/video-fm/LASER/blob/main/demo/videos/v2.gif" width="400"/> | <video src="https://github.com/video-fm/LASER/blob/main/demo/results/v2.gif" width="400"/> |
-
+  <div style="display: inline-block; text-align: center; margin: 10px;">
+    <img src="demo/videos/v2.gif" width="400" alt="Input Video"/><br>
+    <b>Input Video</b>
+  </div>
+  <div style="display: inline-block; text-align: center; margin: 10px;">
+    <img src="demo/results/v2.gif" width="400" alt="Output with Scene Graph"/><br>
+    <b>Output with Scene Graph</b>
+  </div>
 </div>
 
 ## Environmental setup
