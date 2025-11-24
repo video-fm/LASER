@@ -91,19 +91,6 @@ The framework is designed to work with minimal supervision, making it practical 
 - 📚 **Multi-Dataset Support**: Trained and evaluated on ESCA-video-87K and LLaVA-Video-178K datasets
 - 🚀 **End-to-End Pipeline**: Complete preprocessing, training, and evaluation workflow
 
-## 📚 Citation
-
-If you use LASER in your research, please cite:
-
-```bibtex
-@inproceedings{huang2025laser,
-  title={LASER: A Neuro-Symbolic Framework for Learning Spatial-Temporal Scene Graphs with Weak Supervision},
-  author={Huang, Jiani and Li, Ziyang and Naik, Mayur and Lim, Ser-Nam},
-  booktitle={International Conference on Learning Representations (ICLR)},
-  year={2025}
-}
-```
-
 ## 🛠️ Installation
 
 ### Environment Setup
@@ -209,3 +196,16 @@ print(f"CUDA toolkit: {torch.version.cuda}")
     Then when you push your commit and create your pull request, Github will automatically link the commit back to the issue. Add more details in the pull request, and request reviewers from anyone who has recently modified related code.
 4. After 1-2 approvals, merge your pull request.
 
+
+## 📚 Citation
+
+If you use LASER in your research, please cite:
+
+```bibtex
+@inproceedings{huang2025laser,
+  title={LASER: A Neuro-Symbolic Framework for Learning Spatial-Temporal Scene Graphs with Weak Supervision},
+  author={Huang, Jiani and Li, Ziyang and Naik, Mayur and Lim, Ser-Nam},
+  booktitle={International Conference on Learning Representations (ICLR)},
+  year={2025}
+}
+```
