@@ -6,9 +6,10 @@
 
 <div align="center">
 
-[![Paper](https://img.shields.io/badge/arXiv-2304.07647-b31b1b.svg)](https://arxiv.org/abs/2304.07647)
+[![Paper](https://img.shields.io/badge/arXiv-LASER_paper-b31b1b.svg)](https://arxiv.org/abs/2304.07647)
 [![Dataset](https://img.shields.io/badge/🤗%20HuggingFace-ESCA--video--87K-yellow)](https://huggingface.co/datasets/video-fm/ESCA-video-87K)
-[![Code](https://img.shields.io/badge/GitHub-LASER-blue?logo=github)](https://github.com/video-fm/LASER)
+[![Model](https://img.shields.io/badge/🤗%20HuggingFace-SGCLIP--model-green)](https://huggingface.co/video-fm/vine_v0)
+[![Code](https://img.shields.io/badge/GitHub-LASER_code-blue?logo=github)](https://github.com/video-fm/LASER)
 
 [Jiani Huang](https://www.cis.upenn.edu/~jianih/) · [Ziyang Li](https://liby99.github.io) · [Mayur Naik](https://www.cis.upenn.edu/~mhnaik/) · [Ser-Nam Lim](https://sites.google.com/site/sernam)
 
@@ -64,22 +65,87 @@
   <em>LASER automatically detects objects, actions and their relationships in videos</em>
 </p>
 
+## 📰 News
 
-## Environmental setup
+- **[2025.10.28]** 🎉 Our follow-up work [ESCA](https://github.com/video-fm/ESCA) demonstrating the usage of LASER model in an embodied environment is accepted as **NeurIPS 2025 Spotlight**!
+- **[2025.08.30]** 🤗 We have open sourced our [scene graph generation model](https://huggingface.co/video-fm/vine_v0)
+- **[2025.08.30]** 📊 We have open sourced our [training data](https://huggingface.co/datasets/video-fm/ESCA-video-87K)
+- **[2025.03.02]** ✨ LASER is accepted to **ICLR 2025**!
 
-#### Training Env
+## 📖 Overview
 
-Step 1. Conda create from environments/laser_train_env.yml
-Step 2. Install a patched version of [grounding dino](https://github.com/video-fm/GroundingDINO)
-Step 3. Install a patched version [segment-anything-2](https://github.com/video-fm/video-sam2) 
-Step 4. Install [Scallop language](https://github.com/scallop-lang/scallop) according to the instructions. 
-Step 5. Verify setup by running the [train script](src/training/train_clip_distributed_restore.py)
+LASER addresses the challenge of learning comprehensive scene understanding from videos by integrating:
 
-#### Evaluation Env
-Step 1. Conda create from environments/laser_eval_env.yml
-Step 2. Install a patched version of [grounding dino](https://github.com/video-fm/GroundingDINO)
-Step 3. Install a patched version [segment-anything-2](https://github.com/video-fm/video-sam2) 
-Step 4. Verify setup by running the demo jupyter notebook
+- 🔍 **Vision-Language Understanding**: Uses CLIP-based models to learn visual-semantic representations of objects and their relationships
+- ⏱️ **Temporal Reasoning**: Employs Scallop logic programming for symbolic reasoning over temporal sequences
+- 🏷️ **Weak Supervision**: Learns from natural language descriptions converted to formal specifications using GPT
+- 🎯 **Multi-modal Processing**: Combines object detection (GroundingDINO), segmentation (SAM2), and relationship modeling
+
+The framework is designed to work with minimal supervision, making it practical for real-world applications where fully annotated temporal scene graphs are expensive or infeasible to obtain.
+
+### ✨ Key Features
+
+- 🔗 **Spatial-Temporal Scene Graph Learning**: Automatically discovers object relationships across time
+- 📝 **Natural Language Specifications**: Converts natural language descriptions to formal temporal logic specifications (STSL)
+- ⚖️ **Contrastive Learning**: Uses positive and negative examples for robust relationship learning  
+- 📚 **Multi-Dataset Support**: Trained and evaluated on ESCA-video-87K and LLaVA-Video-178K datasets
+- 🚀 **End-to-End Pipeline**: Complete preprocessing, training, and evaluation workflow
+
+## 📚 Citation
+
+If you use LASER in your research, please cite:
+
+```bibtex
+@inproceedings{huang2025laser,
+  title={LASER: A Neuro-Symbolic Framework for Learning Spatial-Temporal Scene Graphs with Weak Supervision},
+  author={Huang, Jiani and Li, Ziyang and Naik, Mayur and Lim, Ser-Nam},
+  booktitle={International Conference on Learning Representations (ICLR)},
+  year={2025}
+}
+```
+
+## 🛠️ Environment Setup
+
+### 🏋️ Training Environment
+
+1. **Create conda environment**
+   ```bash
+   conda env create -f environments/laser_train_env.yml
+   ```
+
+2. **Install patched GroundingDINO**
+   ```bash
+   # Follow instructions at https://github.com/video-fm/GroundingDINO
+   ```
+
+3. **Install patched Segment Anything 2**
+   ```bash
+   # Follow instructions at https://github.com/video-fm/video-sam2
+   ```
+
+4. **Install Scallop language**
+   ```bash
+   # Follow instructions at https://github.com/scallop-lang/scallop
+   ```
+
+5. **Verify setup**
+   ```bash
+   python src/training/train_clip_distributed_restore.py
+   ```
+
+### 📊 Evaluation Environment
+
+1. **Create conda environment**
+   ```bash
+   conda env create -f environments/laser_eval_env.yml
+   ```
+
+2. **Install patched GroundingDINO** (same as training)
+
+3. **Install patched Segment Anything 2** (same as training)
+
+4. **Verify setup**
+   - Run the [demo jupyter notebook](demo/inference.ipynb)
 
 ## Datasets
 
