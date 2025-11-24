@@ -22,9 +22,7 @@
 
 | Input Video | Output Video (with Scene Graph) |
 |:-----------:|:-------------------------------:|
-| <video src="https://github.com/video-fm/LASER/blob/main/demo/videos/v2.mp4" width="400"/> | <video src="https://github.com/video-fm/LASER/blob/main/demo/results/v2.mp4" width="400"/> |
-
-*Click on the videos above to play them*
+| <video src="https://github.com/video-fm/LASER/blob/main/demo/videos/v2.gif" width="400"/> | <video src="https://github.com/video-fm/LASER/blob/main/demo/results/v2.gif" width="400"/> |
 
 </div>
 
