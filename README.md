@@ -67,7 +67,8 @@
 
 ## 📰 News
 
-- **[2025.10.28]** 🎉 Our follow-up work [ESCA](https://github.com/video-fm/ESCA) demonstrating the usage of LASER model in an embodied environment is accepted as **NeurIPS 2025 Spotlight**!
+ - **[2025.10.28]** 🎉 Our follow-up work [ESCA](https://github.com/video-fm/ESCA), demonstrating the usage of LASER model in an embodied environment, is accepted as **NeurIPS 2025 Spotlight**!  
+  *Jiani Huang, Amish Sethi, Matthew Kuo, Mayank Keoliya, Neelay Velingker, JungHo Jung, Ziyang Li, Ser-Nam Lim, Mayur Naik*
 - **[2025.08.30]** 🤗 We have open sourced our [scene graph generation model](https://huggingface.co/video-fm/vine_v0)
 - **[2025.08.30]** 📊 We have open sourced our [training data](https://huggingface.co/datasets/video-fm/ESCA-video-87K)
 - **[2025.03.02]** ✨ LASER is accepted to **ICLR 2025**!
