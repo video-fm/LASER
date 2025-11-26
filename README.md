@@ -23,7 +23,7 @@
 
 **NeurIPS 2025 Spotlight** · [Code](https://github.com/video-fm/ESCA)
 
-Jiani Huang · Amish Sethi · Matthew Kuo · Mayank Keoliya · Neelay Velingker · JungHo Jung · Ser-Nam Lim · Ziyang Li · Mayur Naik
+[Jiani Huang](https://www.cis.upenn.edu/~jianih/) • [Amish Sethi](https://amishsethi.github.io/personal-website/) • [Matthew Kuo](https://www.linkedin.com/in/kuomat/) • [Mayank Keoliya](https://www.seas.upenn.edu/~mkeoliya/) • [Neelay Velingker](https://nvelingker.github.io/) • [JungHo Jung](https://www.linkedin.com/in/diffunity/) • [Ser-Nam Lim](https://sites.google.com/site/sernam) • [Ziyang Li](https://liby99.github.io/) • [Mayur Naik](https://www.cis.upenn.edu/~mhnaik/)
 
 This follow-up work demonstrates applying LASER for scene-graph generation in embodied agent environments.
 
