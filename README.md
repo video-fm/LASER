@@ -17,6 +17,17 @@
 
 </div>
 
+## 🔗 Follow-up Work
+
+### ESCA: Contextualizing Embodied Agents via Scene-Graph Generation
+
+**NeurIPS 2025 Spotlight** · [Code](https://github.com/video-fm/ESCA)
+
+Jiani Huang · Amish Sethi · Matthew Kuo · Mayank Keoliya · Neelay Velingker · JungHo Jung · Ser-Nam Lim · Ziyang Li · Mayur Naik
+
+This follow-up work demonstrates applying LASER for scene-graph generation in embodied agent environments.
+
+
 ## 🎬 What does LASER do for you? 
 
 
