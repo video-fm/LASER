@@ -7,6 +7,7 @@
 <div align="center">
 
 [![Paper](https://img.shields.io/badge/arXiv-LASER_paper-b31b1b.svg)](https://arxiv.org/abs/2304.07647)
+[![Demo](https://img.shields.io/badge/🤗%20Spaces-LASER_Demo-yellow)](https://huggingface.co/spaces/jiani-huang/LASER)
 [![Dataset](https://img.shields.io/badge/🤗%20HuggingFace-ESCA--video--87K-yellow)](https://huggingface.co/datasets/video-fm/ESCA-video-87K)
 [![Model](https://img.shields.io/badge/🤗%20HuggingFace-SGCLIP--model-green)](https://huggingface.co/video-fm/vine_v0)
 [![Code](https://img.shields.io/badge/GitHub-LASER_code-blue?logo=github)](https://github.com/video-fm/LASER)
@@ -77,8 +78,8 @@ This follow-up work demonstrates applying LASER for scene-graph generation in em
 </p>
 
 ## 📰 News
-
- - **[2025.10.28]** 🎉 Our follow-up work [ESCA](https://github.com/video-fm/ESCA), demonstrating the usage of LASER model in an embodied environment, is accepted as **NeurIPS 2025 Spotlight**!  
+- **[2025.12.01]** 🤗 We have released a [Hugging Face demo](https://huggingface.co/spaces/jiani-huang/LASER)!
+- **[2025.10.28]** 🎉 Our follow-up work [ESCA](https://github.com/video-fm/ESCA), demonstrating the usage of LASER model in an embodied environment, is accepted as **NeurIPS 2025 Spotlight**!  
   *Jiani Huang, Amish Sethi, Matthew Kuo, Mayank Keoliya, Neelay Velingker, JungHo Jung, Ziyang Li, Ser-Nam Lim, Mayur Naik*
 - **[2025.08.30]** 🤗 We have open sourced our [scene graph generation model](https://huggingface.co/video-fm/vine_v0)
 - **[2025.08.30]** 📊 We have open sourced our [training data](https://huggingface.co/datasets/video-fm/ESCA-video-87K)
